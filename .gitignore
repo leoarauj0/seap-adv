@@ -12,6 +12,9 @@
 /.next/
 /out/
 
+# bkp
+/desc/
+
 # production
 /build
 
