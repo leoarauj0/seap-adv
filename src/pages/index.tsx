@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -11,6 +12,9 @@ type Livros = {
   titulo: string;
   descricao: string;
   dataCadastro: string;
+  file: {
+    url: string;
+  };
 };
 
 const Home: NextPage = () => {
@@ -41,26 +45,45 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        {/* <h1 className={styles.title}>Dashboard Biblioteca</h1> */}
+      <div className={styles.homepage}>
+        <section className={styles.livrosRecentes}>
+          <ul>
+            {livros.map((item: Livros) => {
+              // eslint-disable-next-line react/jsx-key
+              return (
+                <li key={item.id}>
+                  <img
+                    src={item.file.url}
+                    alt="foto"
+                    width={70}
+                    height={70}
+                    // objectFit="cover"
+                  />
+                  <br />
+                  <div className={styles.livrosDetalhes}>
+                    <span>{item.titulo}:</span>
+                    <p>{item.descricao}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
 
-        {livros.map((item: Livros) => {
-          // eslint-disable-next-line react/jsx-key
-          return <p>{item.titulo}</p>;
-        })}
-      </main>
+        {/* <section className={styles.listaLivros}></section> */}
+      </div>
 
       <footer className={styles.footer}>
-        <a
+        {/* <a
           href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
           target="_blank"
           rel="noopener noreferrer"
-        >
-          Powered by
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
+        > */}
+        Secretaria de Administração Penitenciária - SEAP
+        {/* <span className={styles.logo}>
+          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+        </span> */}
+        {/* </a> */}
       </footer>
     </div>
   );
