@@ -2,6 +2,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Header } from "../components/Header";
@@ -12,6 +13,7 @@ type Livros = {
   titulo: string;
   descricao: string;
   dataCadastro: string;
+  locado: string;
   file: {
     url: string;
   };
@@ -51,26 +53,81 @@ const Home: NextPage = () => {
             {livros.map((item: Livros) => {
               // eslint-disable-next-line react/jsx-key
               return (
-                <li key={item.id}>
-                  <img
-                    src={item.file.url}
-                    alt="foto"
-                    width={70}
-                    height={70}
-                    // objectFit="cover"
-                  />
-                  <br />
-                  <div className={styles.livrosDetalhes}>
-                    <span>{item.titulo}:</span>
-                    <p>{item.descricao}</p>
-                  </div>
-                </li>
+                <Link href={`/livros/${item.id}`} key={item.id}>
+                  <a>
+                    <li>
+                      <img
+                        src={item.file.url}
+                        alt="foto"
+                        width={70}
+                        height={70}
+                        // objectFit="cover"
+                      />
+                      <div className={styles.livrosDetalhes}>
+                        <span>{item.titulo}:</span>
+                        <p>{item.descricao}</p>
+                      </div>
+                    </li>
+                  </a>
+                </Link>
               );
             })}
           </ul>
         </section>
 
-        {/* <section className={styles.listaLivros}></section> */}
+        <section className={styles.listaLivros}>
+          <h2>Acervo de Livros</h2>
+
+          <table cellSpacing={0}>
+            <thead>
+              <tr>
+                <th></th>
+                <th>Titulo</th>
+                <th>Descrição</th>
+                <th>Data de Cadastro</th>
+                <th>Locado</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {livros.map((item: Livros) => {
+                // eslint-disable-next-line react/jsx-key
+                return (
+                  <tr key={item.id}>
+                    <td>
+                      <img
+                        src={item.file.url}
+                        alt="foto"
+                        width={40}
+                        height={40}
+                        // objectFit="cover"
+                      />
+                    </td>
+                    <td>
+                      <span>{item.titulo}:</span>
+                    </td>
+                    <td>
+                      <p>{item.descricao}</p>
+                    </td>
+                    <td>
+                      <p>{item.dataCadastro}</p>
+                    </td>
+                    <td>
+                      <p>Sim</p>
+                    </td>
+                    <td>
+                      <Link href={`/livros/${item.id}`} key={item.id}>
+                        <button type="button">
+                          <img src="/favicon.ico" alt="icone" />
+                        </button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
       </div>
 
       <footer className={styles.footer}>

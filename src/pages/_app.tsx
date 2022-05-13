@@ -1,7 +1,7 @@
 import "../styles/globals.scss";
 
 import { Header } from "../components/Header";
-import { Player } from "../components/Player";
+import { Menu } from "../components/Menu";
 
 import styles from "../styles/app.module.scss";
 
@@ -12,7 +12,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Header />
       <div className={styles.wrapper}>
-        <Player />
+        <Menu />
         <main>
           <Component {...pageProps} />
         </main>
