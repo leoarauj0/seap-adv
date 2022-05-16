@@ -186,12 +186,12 @@
       }
 
       button {
-        // width: 6rem;
-        // height: 2.5rem;
-        // background: var(--green-500);
+        width: 2rem;
+        height: 2rem;
+        background: var(--white);
         border: 1px solid var(--gray-100);
         border-radius: 0.5rem;
-        // font-size: 0;
+        font-size: 0;
 
         transition: filter 0.2s;
 
@@ -201,8 +201,7 @@
         }
 
         &:hover {
-          filter: brightness(0.9);
-          // background: var(--green-500);
+          filter: brightness(0.95);
         }
       }
     }

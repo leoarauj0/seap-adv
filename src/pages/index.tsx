@@ -7,10 +7,28 @@ import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Header } from "../components/Header";
 import styles from "../styles/Home.module.scss";
+import Footer from "../components/Footer";
+
+import { Input, Button, Tooltip, Modal, Form, Radio, Spin } from "antd";
+import {
+  PicLeftOutlined,
+  DownOutlined,
+  UpOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import "antd/dist/antd.css";
+import onNotification from "../components/Notificacao/Notificacao";
+
+const { Search } = Input;
+
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+const onSearch = (value: any) => {};
 
 type Livros = {
   id: number;
   titulo: string;
+  sub: string;
   descricao: string;
   dataCadastro: string;
   locado: string;
@@ -20,7 +38,49 @@ type Livros = {
 };
 
 const Home: NextPage = () => {
+  const [loading, setLoading] = useState(false);
   const [livros, setLivros] = useState([]);
+  const [agente, setAgente] = useState([]);
+  const [detento, setDetento] = useState([]);
+  const [tipoUsuario, setTipoUsuario] = useState("");
+  const [modalRetirarVisivel, setModalRetirarVisivel] = useState(false);
+  const [buttonLoad, setButtonLoad] = useState(false);
+
+  const [form] = Form.useForm();
+
+  const pesquisarMatricula = async (id: any) => {
+    try {
+      setLoading(true);
+      const response = await api.get(`/agentes/${id}`);
+
+      // setAgente(response.data.find((item: any) => item.id === id));
+
+      console.log(response.data);
+
+      setLoading(false);
+    } catch (err) {
+      onNotification("error", {
+        message: "Error!",
+        description: "Erro ao buscar agente",
+      });
+    }
+  };
+
+  const pesquisarMatriculaDetento = (value: any) => {};
+
+  const mostraModalRetirar = () => {
+    setModalRetirarVisivel(true);
+  };
+
+  const handleOk = () => {
+    setModalRetirarVisivel(false);
+  };
+
+  const handleCancel = () => {
+    setModalRetirarVisivel(false);
+    form.resetFields();
+    setTipoUsuario("");
+  };
 
   useEffect(() => {
     buscaLivros();
@@ -29,7 +89,7 @@ const Home: NextPage = () => {
   const buscaLivros = async () => {
     const response = await api.get("livros", {
       params: {
-        _limit: 7,
+        // _limit: 7,
         _sort: "titulo",
         _order: "desc",
       },
@@ -48,45 +108,27 @@ const Home: NextPage = () => {
       </Head>
 
       <div className={styles.homepage}>
-        <section className={styles.livrosRecentes}>
-          <ul>
-            {livros.map((item: Livros) => {
-              // eslint-disable-next-line react/jsx-key
-              return (
-                <Link href={`/livros/${item.id}`} key={item.id}>
-                  <a>
-                    <li>
-                      <img
-                        src={item.file.url}
-                        alt="foto"
-                        width={70}
-                        height={70}
-                        // objectFit="cover"
-                      />
-                      <div className={styles.livrosDetalhes}>
-                        <span>{item.titulo}:</span>
-                        <p>{item.descricao}</p>
-                      </div>
-                    </li>
-                  </a>
-                </Link>
-              );
-            })}
-          </ul>
-        </section>
-
         <section className={styles.listaLivros}>
           <h2>Acervo de Livros</h2>
 
+          <Search
+            placeholder="Pesquisar"
+            onSearch={onSearch}
+            style={{ width: 400 }}
+          />
+          <br />
+          <br />
           <table cellSpacing={0}>
             <thead>
               <tr>
                 <th></th>
+                <th>Código</th>
                 <th>Titulo</th>
-                <th>Descrição</th>
+                <th>Subtitulo</th>
                 <th>Data de Cadastro</th>
                 <th>Locado</th>
-                <th></th>
+                <th>Detalhes</th>
+                <th>Opções</th>
               </tr>
             </thead>
             <tbody>
@@ -100,27 +142,75 @@ const Home: NextPage = () => {
                         alt="foto"
                         width={40}
                         height={40}
+                        // layout="responsive"
                         // objectFit="cover"
                       />
                     </td>
                     <td>
-                      <span>{item.titulo}:</span>
+                      <span>{item.id}</span>
                     </td>
                     <td>
-                      <p>{item.descricao}</p>
+                      <span>{item.titulo}</span>
                     </td>
                     <td>
-                      <p>{item.dataCadastro}</p>
+                      <span>{item.sub}</span>
                     </td>
                     <td>
-                      <p>Sim</p>
+                      <span>{item.dataCadastro}</span>
+                    </td>
+                    <td>
+                      {item.locado === "true" ? (
+                        <span>Sim</span>
+                      ) : (
+                        <span>Não</span>
+                      )}
                     </td>
                     <td>
                       <Link href={`/livros/${item.id}`} key={item.id}>
-                        <button type="button">
-                          <img src="/favicon.ico" alt="icone" />
-                        </button>
+                        <Tooltip
+                          placement="left"
+                          title={"Detalhes"}
+                          color={"#04d361"}
+                        >
+                          <Button>
+                            <PicLeftOutlined />
+                          </Button>
+                        </Tooltip>
                       </Link>
+                    </td>
+                    <td>
+                      {item.locado === "true" ? (
+                        <Link href={`/livros/${item.id}`} key={item.id}>
+                          <Tooltip
+                            placement="left"
+                            title={"Receber"}
+                            color={"#04d361"}
+                          >
+                            <Button
+                              type="primary"
+                              style={{ background: "#04d361" }}
+                            >
+                              <DownOutlined />
+                            </Button>
+                          </Tooltip>
+                        </Link>
+                      ) : (
+                        // <Link href={`/livros/${item.id}`} key={item.id}>
+                        <Tooltip
+                          placement="left"
+                          title={"Retirar"}
+                          color={"#04d361"}
+                        >
+                          <Button
+                            type="primary"
+                            style={{ background: "#08979c" }}
+                            onClick={mostraModalRetirar}
+                          >
+                            <UpOutlined />
+                          </Button>
+                        </Tooltip>
+                        // </Link>
+                      )}
                     </td>
                   </tr>
                 );
@@ -129,19 +219,86 @@ const Home: NextPage = () => {
           </table>
         </section>
       </div>
-
-      <footer className={styles.footer}>
-        {/* <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        > */}
-        Secretaria de Administração Penitenciária - SEAP
-        {/* <span className={styles.logo}>
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </span> */}
-        {/* </a> */}
-      </footer>
+      <Footer />
+      <Modal
+        title="Emprestimo de Livro"
+        visible={modalRetirarVisivel}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={
+          [
+            // <Button
+            //   key="submit"
+            //   type="primary"
+            //   // loading={loading}
+            //   onClick={handleOk}
+            // >
+            //   Submit
+            // </Button>,
+          ]
+        }
+      >
+        <Spin indicator={antIcon} spinning={loading}>
+          <Form
+            // {...formItemLayout}
+            layout="vertical"
+            form={form}
+            // initialValues={{ layout: formLayout }}
+            // onValuesChange={onFormLayoutChange}
+          >
+            <Form.Item name="tipoPessoa" label="Usuário">
+              <Radio.Group>
+                <Radio
+                  value={"detento"}
+                  onChange={() => {
+                    setTipoUsuario("Detento");
+                  }}
+                >
+                  Detento
+                </Radio>
+                <Radio
+                  value={"agente"}
+                  onChange={() => {
+                    setTipoUsuario("Agente");
+                  }}
+                >
+                  Agente
+                </Radio>
+              </Radio.Group>
+            </Form.Item>
+            {tipoUsuario === "Detento" ? (
+              <Form.Item name="idPessoa" label="Pesquisar Matricula">
+                <Search
+                  placeholder="Insira a matricula do detento"
+                  onSearch={pesquisarMatriculaDetento}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+            ) : tipoUsuario === "Agente" ? (
+              <Form.Item name="idPessoa" label="Pesquisar Matricula">
+                <Search
+                  placeholder="Insira a matricula"
+                  onSearch={pesquisarMatricula}
+                  style={{ width: "100%" }}
+                />
+              </Form.Item>
+            ) : null}
+            <Form.Item
+            // {...buttonItemLayout}
+            >
+              <Button
+                type="primary"
+                htmlType="submit"
+                style={{ width: "100%" }}
+                loading={buttonLoad}
+                onClick={() => form.resetFields()}
+              >
+                Confirmar
+              </Button>
+            </Form.Item>
+          </Form>
+        </Spin>
+      </Modal>
     </div>
   );
 };

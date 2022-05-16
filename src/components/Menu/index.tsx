@@ -1,27 +1,32 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
 
+import { HomeOutlined, DownOutlined, UpOutlined } from "@ant-design/icons";
+
 export function Menu() {
   return (
     <div className={styles.menuContainer}>
       {/* aula 2 - 53min */}
 
       <div>
-        <Link href={``}>
+        <Link href={`/`}>
           <a>
+            {/* <HomeOutlined /> */}
             <h3>Início</h3>
           </a>
         </Link>
-        <Link href={``}>
+        <br />
+        {/* <Link href={``}>
           <a>
             <h3>Locar</h3>
           </a>
-        </Link>
-        <Link href={``}>
+        </Link> */}
+        <Link href={`/locacoes`}>
           <a>
             <h3>Locações</h3>
           </a>
         </Link>
+        <br />
         <Link href={``}>
           <a>
             <h3>Cadastrar Livro</h3>

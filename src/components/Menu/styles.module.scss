@@ -1,5 +1,5 @@
 .menuContainer {
-  padding: 1rem 4rem;
+  padding: 2rem 4rem;
   width: 19rem;
   // height: 100vh;
 
@@ -8,6 +8,8 @@
 
   h3 {
     color: var(--white);
+    padding: 0.25rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.445);
   }
 
   display: flex;
