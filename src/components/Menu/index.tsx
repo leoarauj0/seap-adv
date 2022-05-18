@@ -9,7 +9,7 @@ export function Menu() {
       {/* aula 2 - 53min */}
 
       <div>
-        <Link href={`/`}>
+        <Link href={`/home`}>
           <a>
             {/* <HomeOutlined /> */}
             <h3>Início</h3>
@@ -27,9 +27,16 @@ export function Menu() {
           </a>
         </Link>
         <br />
-        <Link href={``}>
+        <Link href={`/cadastro`}>
           <a>
             <h3>Cadastrar Livro</h3>
+          </a>
+        </Link>
+        <br />
+
+        <Link href={`/login`}>
+          <a>
+            <h3>Login</h3>
           </a>
         </Link>
       </div>

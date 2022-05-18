@@ -12,6 +12,14 @@
 //   align-items: center;
 // }
 
+.wrapper {
+  display: flex;
+
+  main {
+    flex: 1;
+  }
+}
+
 .title a {
   color: #0070f3;
   text-decoration: none;
@@ -214,4 +222,8 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.ant-btn-primary .ant-btn .ant-input-search-button {
+  background: #04d361;
 }

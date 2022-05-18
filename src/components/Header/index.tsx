@@ -1,6 +1,6 @@
 import format from "date-fns/format";
 import ptBR from "date-fns/locale/pt-BR";
-
+import { Image } from "antd";
 import styles from "./styles.module.scss";
 
 export function Header() {
@@ -10,7 +10,7 @@ export function Header() {
 
   return (
     <header className={styles.headerContainer}>
-      <img src="/vercel.svg" alt="logo" />
+      <img src="/logo.png" alt="logo" style={{ width: "7%" }} />
 
       <p>Bem vindo a Biblioteca SEAP</p>
       <span>{dataAtual}</span>

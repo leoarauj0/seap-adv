@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+// import '../styles/antd.less'
 
 import { Header } from "../components/Header";
 import { Menu } from "../components/Menu";
@@ -12,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <>
       <Header />
       <div className={styles.wrapper}>
-        <Menu />
+        {/* <Menu /> */}
         <main>
           <Component {...pageProps} />
         </main>
