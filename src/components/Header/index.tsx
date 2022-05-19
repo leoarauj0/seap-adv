@@ -36,7 +36,7 @@ export function Header(props: Props) {
           <span className={styles.data}>Bem vindo a Biblioteca SEAP</span>
 
           <div className={styles.usuario}>
-            <span>{dataAtual}</span>
+            <span className={styles.data}>{dataAtual}</span>
           </div>
         </>
       )}

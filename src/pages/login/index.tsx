@@ -7,13 +7,18 @@ import { api } from "../../../services/api";
 import Footer from "../../components/Footer";
 import styles from "./login.module.scss";
 
-import { Input, Button, Form, Checkbox } from "antd";
+import { Input, Button, Form, Checkbox, Modal } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Header } from "../../components/Header";
+import { useState } from "react";
 
 export default function Login() {
   const router = useRouter();
+
+  const [modalregistro, setModalRegistro] = useState(false);
+
+  const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
     console.log("Success:", values);
@@ -21,6 +26,21 @@ export default function Login() {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
+  };
+
+  // const mostraModalRegistro = () => {
+  //   setModalRegistro(true);
+  // };
+
+  const handleOk = (values) => {
+    setModalRegistro(false);
+    form.resetFields();
+    console.log(values);
+  };
+
+  const handleCancel = () => {
+    setModalRegistro(false);
+    form.resetFields();
   };
 
   return (
@@ -36,7 +56,7 @@ export default function Login() {
         <div className={styles.card}>
           <Form
             layout="vertical"
-            name="basic"
+            name="login"
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
@@ -91,12 +111,13 @@ export default function Login() {
             <Link href={``}>
               <Button
                 // type="primary"
-                htmlType="submit"
+                // htmlType="submit"
                 style={{
                   // background: "#04d361",
                   // color: "#fff",
                   width: "100%",
                 }}
+                onClick={() => setModalRegistro(true)}
               >
                 Registrar
               </Button>
@@ -108,6 +129,67 @@ export default function Login() {
       </main>
 
       <Footer />
+
+      <Modal
+        title="Cadastro de Usuário"
+        visible={modalregistro}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={600}
+        footer={[]}
+      >
+        <Form
+          layout="vertical"
+          name="cadastro"
+          labelCol={{ span: 10 }}
+          wrapperCol={{ span: 24 }}
+          initialValues={{ remember: true }}
+          // onFinish={cadastraUsuario}
+          // onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Nome"
+            name="nome"
+            rules={[{ required: true, message: "Informe seu nome!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Email"
+            name="email"
+            rules={[{ required: true, message: "Informe seu email!" }]}
+          >
+            <Input />
+          </Form.Item>
+
+          <Form.Item
+            label="Senha"
+            name="Senha"
+            rules={[{ required: true, message: "Informe sua senha!" }]}
+          >
+            <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+          // wrapperCol={{ offset: 8, span: 16 }}
+          >
+            <Button
+              // type="primary"
+              htmlType="submit"
+              style={{
+                background: "#04d361",
+                color: "#fff",
+                width: "100%",
+                marginBottom: -50,
+              }}
+            >
+              Cadastrar
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 }
