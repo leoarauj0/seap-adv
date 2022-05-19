@@ -55,7 +55,7 @@ export default function Locacoes() {
       setLoading(true);
       const response = await api.get("livros", {
         params: {
-          // _limit: 10,
+          _limit: 10,
           _sort: "dataRetirada",
           _order: "desc",
         },

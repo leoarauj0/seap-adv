@@ -1,3 +1,11 @@
+.wrapper {
+  display: flex;
+
+  main {
+    flex: 1;
+  }
+}
+
 .livro {
   // max-width: 45rem;
   padding: 3rem 20rem;
