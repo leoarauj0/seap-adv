@@ -31,7 +31,15 @@ export function Header(props: Props) {
             />
           </div>
         </>
-      ) : null}
+      ) : (
+        <>
+          <span className={styles.data}>Bem vindo a Biblioteca SEAP</span>
+
+          <div className={styles.usuario}>
+            <span>{dataAtual}</span>
+          </div>
+        </>
+      )}
     </header>
   );
 }
