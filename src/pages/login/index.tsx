@@ -10,6 +10,7 @@ import styles from "./login.module.scss";
 import { Input, Button, Form, Checkbox } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
+import { Header } from "../../components/Header";
 
 export default function Login() {
   const router = useRouter();
@@ -30,64 +31,80 @@ export default function Login() {
         <link rel="icon" href="/logo.png" />
       </Head>
 
+      <Header login={true} />
       <main className={styles.main}>
-        <Form
-          className={styles.card}
-          layout="vertical"
-          name="basic"
-          labelCol={{ span: 10 }}
-          wrapperCol={{ span: 24 }}
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <h2>Login</h2>
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Informe seu email!" }]}
+        <div className={styles.card}>
+          <Form
+            layout="vertical"
+            name="basic"
+            labelCol={{ span: 10 }}
+            wrapperCol={{ span: 24 }}
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
           >
-            <Input />
-          </Form.Item>
+            <h2>Login</h2>
+            <Form.Item
+              label="Email"
+              name="email"
+              rules={[{ required: true, message: "Informe seu email!" }]}
+            >
+              <Input />
+            </Form.Item>
 
-          <Form.Item
-            label="Senha"
-            name="Senha"
-            rules={[{ required: true, message: "Informe sua senha!" }]}
-          >
-            <Input.Password />
-          </Form.Item>
+            <Form.Item
+              label="Senha"
+              name="Senha"
+              rules={[{ required: true, message: "Informe sua senha!" }]}
+            >
+              <Input.Password />
+            </Form.Item>
 
-          <Form.Item
-            name="lembrar"
-            valuePropName="checked"
+            <Form.Item
+              name="lembrar"
+              valuePropName="checked"
+              // wrapperCol={{ offset: 8, span: 16 }}
+            >
+              <Checkbox>Lembrar-me</Checkbox>
+            </Form.Item>
+
+            <Form.Item
             // wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Checkbox>Lembrar-me</Checkbox>
-          </Form.Item>
+            >
+              <Link href={`/home`}>
+                <Button
+                  // type="primary"
+                  htmlType="submit"
+                  style={{
+                    background: "#04d361",
+                    color: "#fff",
+                    width: "100%",
+                    marginBottom: -50,
+                  }}
+                >
+                  Entrar
+                </Button>
+              </Link>
+            </Form.Item>
 
-          <Form.Item
-          // wrapperCol={{ offset: 8, span: 16 }}
-          >
-            <Link href={`/home`}>
+            <Link href={``}>
               <Button
                 // type="primary"
                 htmlType="submit"
                 style={{
-                  background: "#04d361",
-                  color: "#fff",
+                  // background: "#04d361",
+                  // color: "#fff",
                   width: "100%",
-                  marginBottom: -30,
                 }}
               >
-                Entrar
+                Registrar
               </Button>
             </Link>
-          </Form.Item>
 
-          <Link href={``}>Registrar</Link>
-        </Form>
+            {/* <Link href={``}>Registrar</Link> */}
+          </Form>
+        </div>
       </main>
 
       <Footer />
