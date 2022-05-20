@@ -7,7 +7,7 @@ import { api } from "../../../services/api";
 import Footer from "../../components/Footer";
 import styles from "./login.module.scss";
 
-import { Input, Button, Form, Checkbox, Modal } from "antd";
+import { Input, Button, Form, Checkbox, Modal, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Header } from "../../components/Header";
@@ -42,6 +42,8 @@ export default function Login() {
     setModalRegistro(false);
     form.resetFields();
   };
+
+  const { Option } = Select;
 
   return (
     <>
@@ -166,10 +168,25 @@ export default function Login() {
 
           <Form.Item
             label="Senha"
-            name="Senha"
+            name="senha"
             rules={[{ required: true, message: "Informe sua senha!" }]}
           >
             <Input.Password />
+          </Form.Item>
+
+          <Form.Item
+            label="Perfil"
+            name="perfil"
+            rules={[{ required: true, message: "Informe seu perfil!" }]}
+          >
+            <Select
+            // defaultValue="usuario"
+            // style={{ width: 120 }}
+            // onChange={handleChange}
+            >
+              <Option value="usuario">Usuario</Option>
+              <Option value="administrador">Administrador</Option>
+            </Select>
           </Form.Item>
 
           <Form.Item

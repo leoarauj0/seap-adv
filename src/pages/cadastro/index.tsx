@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import FormItem from "antd/lib/form/FormItem";
 
-import { Menu } from "../../components/Menu";
+import { MenuList } from "../../components/Menu";
 import { Header } from "../../components/Header";
 
 const { TextArea } = Input;
@@ -106,7 +106,7 @@ export default function CadastrarLivro() {
 
       <Header login={false} />
       <div className={styles.wrapper}>
-        <Menu />
+        <MenuList />
         <main>
           <div className={styles.homepage}>
             <h2>Cadastrar Livro</h2>

@@ -1,14 +1,33 @@
 .menuContainer {
-  padding: 2rem 4rem;
-  width: 19rem;
+  padding: 2rem 2rem;
+
   // height: 100vh;
 
   background: linear-gradient(to right, #08979c, var(--green-500));
   // background: var(--purple-800);
 
-  h3 {
+  // transform: scaleX();
+  // transform: translate3d(-10vw, 0, 0);
+
+  .link {
+    display: flex;
+    flex-direction: row;
+    // align-items: center;
+    // justify-content: center;
+
     color: var(--white);
-    padding: 0.25rem 0;
+
+    .icon {
+      padding-top: 0.3rem;
+      padding-bottom: 1rem;
+    }
+
+    h3 {
+      color: var(--white);
+      // padding: 0 1rem;
+      margin-left: 1rem;
+    }
+
     border-bottom: 1px solid rgba(255, 255, 255, 0.445);
   }
 

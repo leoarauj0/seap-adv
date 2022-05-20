@@ -9,7 +9,7 @@ import { Header } from "../../components/Header";
 import styles from "../../styles/Home.module.scss";
 import Footer from "../../components/Footer";
 
-import { Menu } from "../../components/Menu";
+import { MenuList } from "../../components/Menu";
 
 import {
   Input,
@@ -221,7 +221,7 @@ const Home: NextPage = () => {
       <Header login={false} />
 
       <div className={styles.wrapper}>
-        <Menu />
+        <MenuList />
         <main>
           <div className={styles.homepage}>
             <Spin indicator={antIcon} spinning={loading}>

@@ -11,7 +11,7 @@ import { Input, Button, Tooltip } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 
-import { Menu } from "../../components/Menu";
+import { MenuList } from "../../components/Menu";
 import { Header } from "../../components/Header";
 
 type Livro = {
@@ -45,7 +45,7 @@ export default function Livro({ livro }: LivroProps) {
 
       <Header login={false} />
       <div className={styles.wrapper}>
-        <Menu />
+        <MenuList />
         <main>
           <div className={styles.livro}>
             <h1>Detalhes do Livro</h1>

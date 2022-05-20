@@ -12,7 +12,7 @@ import onNotification from "../../components/Notificacao/Notificacao";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
-import { Menu } from "../../components/Menu";
+import { MenuList } from "../../components/Menu";
 import { Header } from "../../components/Header";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -85,7 +85,7 @@ export default function Locacoes() {
       </Head>
       <Header login={false} />
       <div className={styles.wrapper}>
-        <Menu />
+        <MenuList />
         <main>
           <div className={styles.homepage}>
             <h2>Ultimas Locações</h2>
