@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { api } from "../../../services/api";
 
 import styles from "../../styles/Cadastro.module.scss";
@@ -19,6 +19,9 @@ import FormItem from "antd/lib/form/FormItem";
 
 import { MenuList } from "../../components/Menu";
 import { Header } from "../../components/Header";
+
+import format from "date-fns/format";
+import ptBR from "date-fns/locale/pt-BR";
 
 const { TextArea } = Input;
 
@@ -65,34 +68,43 @@ export default function CadastrarLivro() {
   const [loading, setLoading] = useState(false);
   const [livros, setLivros] = useState([]);
 
-  const [form] = Form.useForm();
+  const [cadastro] = Form.useForm();
 
-  useEffect(() => {
-    buscaLivros();
-  }, []);
+  // useEffect(() => {
+  //   buscaLivros();
+  // }, []);
 
-  const buscaLivros = async () => {
+  const dataAtual = format(new Date(), "dd-MM-yyyy", {
+    locale: ptBR,
+  });
+
+  const cadastrar = useCallback(async (form: any) => {
     try {
       setLoading(true);
-      const response = await api.get("livros", {
-        params: {
-          _limit: 10,
-          _sort: "dataRetirada",
-          _order: "desc",
-        },
+      console.log(form);
+      await api.post("/livros", {
+        titulo: form.titulo,
+        sub: form.sub,
+        descricao: form.descricao,
+        dataCadastro: dataAtual,
+        file: null,
+        locado: "false",
       });
-
-      setLivros(response.data);
-
+      onNotification("success", {
+        message: "Ok!",
+        description: "Livro cadastrado com sucesso",
+      });
+      cadastro.resetFields();
       setLoading(false);
     } catch (err) {
+      console.log(form);
       setLoading(false);
       onNotification("error", {
         message: "Erro!",
-        description: "Erro ao buscar locações.",
+        description: "Erro ao cadastrar livro.",
       });
     }
-  };
+  }, []);
 
   // const router = useRouter();
 
@@ -115,19 +127,18 @@ export default function CadastrarLivro() {
                 <Form
                   // {...formItemLayout}
                   layout="vertical"
-                  form={form}
+                  form={cadastro}
                   name="cadastro"
-                  onFinish={handleOk}
+                  onFinish={cadastrar}
                   // initialValues={{ layout: formLayout }}
                   // onValuesChange={onFormLayoutChange}
                 >
-                  <Row gutter={8}>
+                  {/* <Row gutter={8}>
                     <Col xs={12} sm={10} md={8}>
-                      {/* <label></label> */}
                       <FormItem
                         name="foto"
                         colon={false}
-                        required
+                        // required
                         // rules={required}
                         hasFeedback
                         label="Foto"
@@ -139,14 +150,16 @@ export default function CadastrarLivro() {
                         </Upload>
                       </FormItem>
                     </Col>
-                  </Row>
+                  </Row> */}
 
                   <Row gutter={8}>
                     <Col xs={24} sm={12} md={12}>
                       <FormItem
                         name="titulo"
                         colon={false}
-                        required
+                        rules={[
+                          { required: true, message: "Informe o titulo!" },
+                        ]}
                         hasFeedback
                         label="Titulo"
                       >
@@ -155,12 +168,14 @@ export default function CadastrarLivro() {
                     </Col>
                     <Col xs={24} sm={12} md={12}>
                       <FormItem
-                        name="subtitulo"
-                        required
+                        name="sub"
+                        rules={[
+                          { required: true, message: "Informe o subtítulo!" },
+                        ]}
                         hasFeedback
-                        label="Subtitulo"
+                        label="Subtítulo"
                       >
-                        <Input placeholder="Subtitulo" />
+                        <Input placeholder="Subtítulo" />
                       </FormItem>
                     </Col>
                   </Row>
@@ -168,7 +183,9 @@ export default function CadastrarLivro() {
                     <Col xs={24} sm={24} md={24}>
                       <FormItem
                         name="descricao"
-                        required
+                        rules={[
+                          { required: true, message: "Informe a descrição!" },
+                        ]}
                         hasFeedback
                         label="Descrição"
                       >
@@ -182,7 +199,7 @@ export default function CadastrarLivro() {
                     htmlType="submit"
                     style={{ background: "#04d361" }}
                     // loading={buttonLoad}
-                    onClick={() => form.resetFields()}
+                    onClick={() => cadastrar}
                   >
                     Salvar
                   </Button>

@@ -11,13 +11,16 @@ import { Input, Button, Form, Checkbox, Modal, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Header } from "../../components/Header";
-import { useState } from "react";
+import { useCallback, useState } from "react";
+import onNotification from "../../components/Notificacao/Notificacao";
 
 export default function Login() {
   const router = useRouter();
 
   const [modalregistro, setModalRegistro] = useState(false);
 
+  const [login] = Form.useForm();
+  const [cadastro] = Form.useForm();
   const [form] = Form.useForm();
 
   const onFinish = (values: any) => {
@@ -32,6 +35,25 @@ export default function Login() {
   //   setModalRegistro(true);
   // };
 
+  const cadastraUsuario = useCallback(async (form: any) => {
+    try {
+      await api.post("/usuarios", form);
+      onNotification("success", {
+        message: "Ok!",
+        description: "Usuário cadastrado com sucesso",
+      });
+      setModalRegistro(false);
+      cadastro.resetFields();
+    } catch (err) {
+      console.log("erro");
+      onNotification("error", {
+        message: "Erro!",
+        description: "Erro ao cadastrar usuário",
+      });
+      setModalRegistro(false);
+    }
+  }, []);
+
   const handleOk = (values) => {
     setModalRegistro(false);
     form.resetFields();
@@ -40,7 +62,7 @@ export default function Login() {
 
   const handleCancel = () => {
     setModalRegistro(false);
-    form.resetFields();
+    // form.resetFields();
   };
 
   const { Option } = Select;
@@ -59,6 +81,7 @@ export default function Login() {
           <Form
             layout="vertical"
             name="login"
+            form={login}
             labelCol={{ span: 10 }}
             wrapperCol={{ span: 24 }}
             initialValues={{ remember: true }}
@@ -143,10 +166,11 @@ export default function Login() {
         <Form
           layout="vertical"
           name="cadastro"
+          form={cadastro}
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 24 }}
           initialValues={{ remember: true }}
-          // onFinish={cadastraUsuario}
+          onFinish={cadastraUsuario}
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >

@@ -83,7 +83,7 @@ const Home: NextPage = () => {
     form.resetFields();
     try {
       setLoading(true);
-      const livro = livros.filter((item) => item.id === id);
+      const livro = livros.filter((item) => `${item.id}` === id);
       // const response = await api.get(`/livros/${id}`);
 
       setLivrosMapeados(livro);
@@ -95,7 +95,7 @@ const Home: NextPage = () => {
       setLoading(false);
       onNotification("error", {
         message: "Erro!",
-        description: "Erro ao buscar livro. . Insira uma código válido",
+        description: "Erro ao buscar livro. Insira uma código válido",
       });
     }
   };
@@ -270,14 +270,16 @@ const Home: NextPage = () => {
                       return (
                         <tr key={item.id}>
                           <td>
-                            <img
-                              src={item.file.url}
-                              alt="foto"
-                              width={40}
-                              height={40}
-                              // layout="responsive"
-                              // objectFit="cover"
-                            />
+                            {item?.file?.url !== undefined && (
+                              <img
+                                src={item?.file?.url}
+                                alt=""
+                                width={40}
+                                height={40}
+                                // layout="responsive"
+                                // objectFit="cover"
+                              />
+                            )}
                           </td>
                           <td>
                             <span>{item.id}</span>

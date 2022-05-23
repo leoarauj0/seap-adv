@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     descricao: data.descricao,
     dataCadastro: data.dataCadastro,
     locado: data.locado,
-    url: data.file.url,
+    url: data?.file?.url || null,
   };
 
   return {
