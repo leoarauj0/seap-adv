@@ -23,15 +23,15 @@ export function MenuList() {
   const [styleMenu, setStyleMenu] = useState({
     width: "16rem",
     opacity: 1,
-    scale: 0.1,
+    scale: "scale(1)",
   });
 
   const mudaMenu = () => {
     setFechado(!fechado);
     console.log(fechado);
     fechado === false
-      ? setStyleMenu({ width: "16rem", opacity: 1, scale: 0.1 })
-      : setStyleMenu({ width: "5rem", opacity: 0, scale: 0.1 });
+      ? setStyleMenu({ width: "16rem", opacity: 1, scale: "scale(1)" })
+      : setStyleMenu({ width: "5rem", opacity: 0, scale: "scale(0)" });
   };
 
   // useEffect(() => {
@@ -81,6 +81,7 @@ export function MenuList() {
               style={{
                 opacity: `${styleMenu.opacity}`,
                 transition: "opacity 0.8s",
+                // transform: `${styleMenu.scale}`,
               }}
             >
               Cadastrar Livro
