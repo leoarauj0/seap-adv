@@ -98,7 +98,7 @@ export default function Locacoes() {
                       <Link href={`/livros/${item.id}`} key={item.id}>
                         <li>
                           <img
-                            src={item.file.url}
+                            src={item?.file?.url}
                             alt="foto"
                             width={70}
                             height={70}
