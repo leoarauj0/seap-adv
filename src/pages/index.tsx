@@ -9,7 +9,7 @@ import { Header } from "../components/Header";
 import styles from "../styles/Home.module.scss";
 import Footer from "../components/Footer";
 
-import { Menu } from "../components/Menu";
+// import { Menu } from "../components/Menu";
 
 import {
   Input,

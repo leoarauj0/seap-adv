@@ -1,3 +1,4 @@
+import { useCallback, useState, useContext } from "react";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -11,8 +12,8 @@ import { Input, Button, Form, Checkbox, Modal, Select } from "antd";
 import { LeftOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import { Header } from "../../components/Header";
-import { useCallback, useState } from "react";
 import onNotification from "../../components/Notificacao/Notificacao";
+import { AutenticadoContext } from "../../context/AuthContext";
 
 export default function Login() {
   const router = useRouter();
@@ -23,9 +24,17 @@ export default function Login() {
   const [cadastro] = Form.useForm();
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
+  const { signIn } = useContext(AutenticadoContext);
+
+  async function onFinish({ login, senha }) {
+    const data = {
+      login,
+      senha,
+    };
+
+    await signIn(data);
+    // console.log("Success:", values);
+  }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -91,16 +100,16 @@ export default function Login() {
           >
             <h2>Login</h2>
             <Form.Item
-              label="Email"
-              name="email"
-              rules={[{ required: true, message: "Informe seu email!" }]}
+              label="Login"
+              name="login"
+              rules={[{ required: true, message: "Informe seu login!" }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item
               label="Senha"
-              name="Senha"
+              name="senha"
               rules={[{ required: true, message: "Informe sua senha!" }]}
             >
               <Input.Password />
@@ -117,20 +126,20 @@ export default function Login() {
             <Form.Item
             // wrapperCol={{ offset: 8, span: 16 }}
             >
-              <Link href={`/home`}>
-                <Button
-                  // type="primary"
-                  htmlType="submit"
-                  style={{
-                    background: "#04d361",
-                    color: "#fff",
-                    width: "100%",
-                    marginBottom: -50,
-                  }}
-                >
-                  Entrar
-                </Button>
-              </Link>
+              {/* <Link href={`/home`}> */}
+              <Button
+                // type="primary"
+                htmlType="submit"
+                style={{
+                  background: "#04d361",
+                  color: "#fff",
+                  width: "100%",
+                  marginBottom: -50,
+                }}
+              >
+                Entrar
+              </Button>
+              {/* </Link> */}
             </Form.Item>
 
             <Link href={``}>
@@ -183,9 +192,9 @@ export default function Login() {
           </Form.Item>
 
           <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Informe seu email!" }]}
+            label="Login"
+            name="login"
+            rules={[{ required: true, message: "Informe seu login!" }]}
           >
             <Input />
           </Form.Item>
