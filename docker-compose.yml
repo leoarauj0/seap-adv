@@ -1,0 +1,19 @@
+version: "3.3"
+
+services:
+  nextjs:
+    ports:
+      - 3003:3000
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - /etc/localtime:/etc/localtime
+      - ./:/usr/src/app
+      - node_modules:/usr/src/app/node_modules
+    command: sh -c "yarn && yarn build && yarn start"
+
+volumes:
+    node_modules:
+        external: true
+

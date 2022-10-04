@@ -18,7 +18,7 @@ export function Header(props: Props) {
 
   return (
     <header className={styles.headerContainer}>
-      <img src="/logo.png" alt="logo" style={{ width: "10rem" }} />
+      {/* <img src="/logo.png" alt="logo" style={{ width: "10rem" }} /> */}
       {props.login === false ? (
         <>
           <span className={styles.data}>{dataAtual}</span>
@@ -33,7 +33,7 @@ export function Header(props: Props) {
         </>
       ) : (
         <>
-          <span className={styles.data}>Bem vindo a Biblioteca SEAP</span>
+          <span>Bem vindo ao Seap-Juris</span>
 
           <div className={styles.usuario}>
             <span className={styles.data}>{dataAtual}</span>
