@@ -44,34 +44,34 @@ export default function Login() {
     console.log("Failed:", errorInfo);
   };
 
-  // const mostraModalRegistro = () => {
-  //   setModalRegistro(true);
-  // };
-
-  const cadastraUsuario = useCallback(async (form: any) => {
-    try {
-      await api.post("/usuarios", form);
-      onNotification("success", {
-        message: "Ok!",
-        description: "Usuário cadastrado com sucesso",
-      });
-      setModalRegistro(false);
-      cadastro.resetFields();
-    } catch (err) {
-      console.log("erro");
-      onNotification("error", {
-        message: "Erro!",
-        description: "Erro ao cadastrar usuário",
-      });
-      setModalRegistro(false);
-    }
-  }, []);
-
-  const handleOk = (values) => {
-    setModalRegistro(false);
-    form.resetFields();
-    console.log(values);
+  const mostraModalRegistro = () => {
+    setModalRegistro(true);
   };
+
+  // const cadastraUsuario = useCallback(async (form: any) => {
+  //   try {
+  //     await api.post("/usuarios", form);
+  //     onNotification("success", {
+  //       message: "Ok!",
+  //       description: "Usuário cadastrado com sucesso",
+  //     });
+  //     setModalRegistro(false);
+  //     cadastro.resetFields();
+  //   } catch (err) {
+  //     console.log("erro");
+  //     onNotification("error", {
+  //       message: "Erro!",
+  //       description: "Erro ao cadastrar usuário",
+  //     });
+  //     setModalRegistro(false);
+  //   }
+  // }, []);
+
+  // const handleOk = (values) => {
+  //   setModalRegistro(false);
+  //   form.resetFields();
+  //   console.log(values);
+  // };
 
   const handleCancel = () => {
     setModalRegistro(false);
@@ -147,26 +147,27 @@ export default function Login() {
                   width: "100%",
                   marginBottom: -50,
                 }}
+                onClick={() => router.push(`/visitas/menuTelaDeVisita`)}
               >
                 Entrar
               </Button>
               {/* </Link> */}
             </Form.Item>
 
-            <Link href={``}>
-              <Button
-                // type="primary"
-                // htmlType="submit"
-                style={{
-                  // background: "#04d361",
-                  // color: "#fff",
-                  width: "100%",
-                }}
-                onClick={() => setModalRegistro(true)}
-              >
-                Pré Cadastro de Advogado
-              </Button>
-            </Link>
+            {/* <Link href={``}> */}
+            <Button
+              // type="primary"
+              // htmlType="submit"
+              style={{
+                // background: "#04d361",
+                // color: "#fff",
+                width: "100%",
+              }}
+              onClick={() => mostraModalRegistro()}
+            >
+              Pré Cadastro de Advogado
+            </Button>
+            {/* </Link> */}
 
             {/* <Link href={``}>Registrar</Link> */}
           </Form>
@@ -178,7 +179,7 @@ export default function Login() {
       <Modal
         title="Pré Cadastro de Advogado"
         visible={modalregistro}
-        onOk={handleOk}
+        // onOk={handleOk}
         onCancel={handleCancel}
         width={600}
         footer={[]}
@@ -190,7 +191,7 @@ export default function Login() {
           labelCol={{ span: 10 }}
           wrapperCol={{ span: 24 }}
           initialValues={{ remember: true }}
-          onFinish={cadastraUsuario}
+          // onFinish={cadastraUsuario}
           // onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
@@ -240,7 +241,7 @@ export default function Login() {
               // type="primary"
               htmlType="submit"
               style={{
-                background: "#04d361",
+                background: "#000b6b",
                 color: "#fff",
                 width: "100%",
                 marginBottom: -50,

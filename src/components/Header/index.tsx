@@ -26,7 +26,7 @@ export function Header(props: Props) {
           <div className={styles.usuario}>
             <p>Bem vindo, {usuario}</p>
             <Avatar
-              style={{ backgroundColor: "#04d361" }}
+              style={{ backgroundColor: "#000b6b" }}
               icon={<UserOutlined />}
             />
           </div>
